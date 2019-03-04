@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="172.16.1.225">
+    <serverData>
+      <paths name="172.16.1.225">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/apps/projects" local="$PROJECT_DIR$" web="http://172.16.1.225:/root/apps/projects" />
+            <mapping local="$USER_HOME$/apps/spark-2.4.0-bin-hadoop2.7/python/lib/py4j-0.10.7-src.zip" web="/" />
+            <mapping local="$USER_HOME$/apps/spark-2.4.0-bin-hadoop2.7/python/lib/pyspark.zip" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

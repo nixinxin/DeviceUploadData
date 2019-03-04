@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "2019-02-27.py", line 87, in <module>
+    schedule.start()
+  File "/usr/local/lib/python3.6/dist-packages/apscheduler/schedulers/blocking.py", line 19, in start
+    self._main_loop()
+  File "/usr/local/lib/python3.6/dist-packages/apscheduler/schedulers/blocking.py", line 28, in _main_loop
+    self._event.wait(wait_seconds)
+  File "/usr/lib/python3.6/threading.py", line 551, in wait
+    signaled = self._cond.wait(timeout)
+  File "/usr/lib/python3.6/threading.py", line 299, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt
