@@ -10,3 +10,5 @@ Traceback (most recent call last):
   File "/usr/lib/python3.6/threading.py", line 299, in wait
     gotit = waiter.acquire(True, timeout)
 KeyboardInterrupt
+Execution of job "main (trigger: interval[0:00:01], next run at: 2019-03-05 08:57:04 CST)" skipped: maximum number of running instances reached (1)
+Run time of job "main (trigger: interval[0:00:01], next run at: 2019-03-05 08:57:14 CST)" was missed by 0:00:09.445601

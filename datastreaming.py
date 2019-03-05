@@ -44,11 +44,11 @@ def data_format(**data):
 
 def insert_hbase(format_data):
 
-    pool = happybase.ConnectionPool(size=10, host='172.16.1.225')
+    pool = happybase.ConnectionPool(size=5, host='172.16.1.225')
     with pool.connection() as connection:
         table = connection.table("device_upload_data")
         try:
-            with table.batch(batch_size=100) as b:
+            with table.batch(batch_size=10) as b:
                 status = b.put(format_data[0] + str(time.time()) + str(random.randint(1, 1000)), format_data[1])
         except Exception as e:
             status = e
@@ -84,7 +84,7 @@ if __name__ == '__main__':
 
     sc = SparkContext("spark://{}:7077".format(host), appName="logfile-streaming")
     # sc.setLogLevel("info")
-    ssc = StreamingContext(sc, 10)
+    ssc = StreamingContext(sc, 5)
     kafkaStreams = KafkaUtils.createStream(ssc=ssc,
                                            zkQuorum=zkQuorum,
                                            groupId='0',
