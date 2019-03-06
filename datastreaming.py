@@ -42,13 +42,12 @@ def data_format(**data):
     return row_key, result
 
 
-def insert_hbase(format_data):
+def insert_hbase(pool, format_data):
 
-    pool = happybase.ConnectionPool(size=5, host='172.16.1.225')
     with pool.connection() as connection:
         table = connection.table("device_upload_data")
         try:
-            with table.batch(batch_size=10) as b:
+            with table.batch(batch_size=100) as b:
                 status = b.put(format_data[0] + str(time.time()) + str(random.randint(1, 1000)), format_data[1])
         except Exception as e:
             status = e
@@ -61,19 +60,18 @@ def data_log(str):
 
 
 # 处理RDD元素，此RDD元素需为字典类型
-def fmt_data(msg_dict):
+def fmt_data(pool, msg_dict):
     msg_dict = json.loads(msg_dict)
     data = data_format(**msg_dict)
-    status = insert_hbase(data)
+    status = insert_hbase(pool, data)
     print(status, msg_dict['@timestamp'])
     return msg_dict
 
 
 def connectAndWrite(data):
+    pool = happybase.ConnectionPool(size=10, host='172.16.1.225')
     if not data.isEmpty():
-        device_upload_data = data.map(lambda x: x[1])
-        msg_row = device_upload_data.map(lambda x: fmt_data(x))
-        msg_row.collect()
+        data.foreach(lambda row: fmt_data(pool, row))
 
 
 if __name__ == '__main__':
@@ -82,7 +80,8 @@ if __name__ == '__main__':
     zkQuorum = host + ':2181'
     groupId = '172.16.2.200:2181'
 
-    sc = SparkContext("spark://{}:7077".format(host), appName="logfile-streaming")
+    # sc = SparkContext("spark://{}:7077".format(host), appName="logfile-streaming")
+    sc = SparkContext("local[2]", appName="logfile-streaming")
     # sc.setLogLevel("info")
     ssc = StreamingContext(sc, 5)
     kafkaStreams = KafkaUtils.createStream(ssc=ssc,
@@ -91,7 +90,7 @@ if __name__ == '__main__':
                                            topics={"logfile-memory-kafka": 1},
                                            kafkaParams={'logfile-memory-kafka': 1})
 
-    kafkaStreams.foreachRDD(connectAndWrite)
+    kafkaStreams.foreachRDD(lambda rdd: rdd.foreachPartition(connectAndWrite))
 
     ssc.start()
     ssc.awaitTermination()
