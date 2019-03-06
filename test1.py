@@ -1,0 +1,7 @@
+sss = ('06/Mar/2019:12:15:36 +0800', {'@timestamp:@timestamp': '06/Mar/2019:12:15:36 +0800', 'request_body:cmd': '021001', 'request_body:sn': '3', 'request_body:battery': '89', 'request_body:rssi': '99', 'request_body:time': '1551845736803', 'request_body:time_string': '06/03/2019:12:15:36', 'request_body:warn': '1', 'request_body:object_direction': '1', 'request_body:object_move': 'False', 'request_body:ntc_temperature': '9.92', 'request_body:dig_temperature': '6.82', 'request_body:humidity': '15.33', 'request_body:pressure': '0', 'request_body:x_amplitude': '2745', 'request_body:x_frequency': '6836', 'request_body:y_amplitude': '9500', 'request_body:y_frequency': '9963', 'request_body:z_amplitude': '9865', 'request_body:z_frequency': '8564', 'request_body:device_code': '002108010712211D', 'request_body:type': 'device_data', '@fields:host': 'wechat.v3.api.2012iot.com', '@fields:server_port': '80', '@fields:remote_addr': '192.168.5.175', '@fields:upstream_addr': '10.21.10.79:8080', '@fields:remote_user': '', '@fields:request': 'POST /api-wechat/alarm/alarmServer HTTP/1.0', '@fields:status': '200', '@fields:upstream_status': '200', '@fields:request_time': '0.472', '@fields:upstream_response_time': '0.472', '@fields:body_bytes_sent': '12', '@fields:http_referer': '', '@fields:http_user_agent': '', '@fields:http_x_forwarded_for': '47.100.234.175, 192.168.5.152', '@fields:http_tokenStr': ''})
+
+def aaa(sss):
+    print(sss[0])
+
+if __name__ == '__main__':
+    aaa(sss)
